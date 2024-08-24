@@ -3,8 +3,11 @@
     <a-layout-sider width="200" theme="dark" class="sidebar">
       <div class="logo">My Logo</div>
       <a-menu mode="inline" theme="dark">
-        <a-menu-item v-for="route in routes" :key="route.name">
-          <router-link :to="route.path">{{ route.name }}</router-link>
+        <a-menu-item v-for="route in menuRoutes" :key="route.path">
+          <router-link :to="route.path">
+            <component :is="route.meta?.icon" />
+            {{ route.meta.title }}
+          </router-link>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -23,12 +26,22 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
+import routes from "@/router/routes"; // 假设你将路由配置放在这个路径下
 
-const routes = reactive([
-  { path: "/home", name: "Home" },
-  { path: "/gantt", name: "Gantt" },
-]);
+const getMenuRoutes = (routes) => {
+  return routes.reduce((acc, route) => {
+    if (route.children) {
+      acc.push(...getMenuRoutes(route.children));
+    }
+    if (route.meta && route.meta.isMenu) {
+      acc.push(route);
+    }
+    return acc;
+  }, []);
+};
+
+const menuRoutes = computed(() => getMenuRoutes(routes));
 </script>
 
 <style scoped>
