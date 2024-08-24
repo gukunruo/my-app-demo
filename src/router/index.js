@@ -1,13 +1,10 @@
-import {
-  createRouter,
-  createWebHistory,
-  createWebHashHistory
-} from 'vue-router';
-import routes from './routes';
+// router.js
+import { createRouter, createWebHistory } from 'vue-router';
+import routes from './routes'; // 引入 routes.js 中的路由配置
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes // 使用引入的路由配置
 });
 
 export default router;
