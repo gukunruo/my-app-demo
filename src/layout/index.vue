@@ -1,8 +1,8 @@
 <template>
   <a-layout id="layout" class="container">
-    <SideMenu />
+    <SideMenu :collapsed="collapsed" />
     <a-layout>
-      <TopBar />
+      <TopBar :collapsed="collapsed" @toggle="toggleSidebar" />
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
@@ -14,8 +14,15 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import SideMenu from "./components/sideMenu.vue";
 import TopBar from "./components/topBar.vue";
+
+const collapsed = ref(false);
+
+const toggleSidebar = () => {
+  collapsed.value = !collapsed.value;
+};
 </script>
 
 <style scoped>

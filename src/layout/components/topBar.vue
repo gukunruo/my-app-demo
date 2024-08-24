@@ -39,17 +39,24 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 
+const props = defineProps({
+  collapsed: {
+    type: Boolean,
+    default: false
+  }
+});
+
+const emit = defineEmits(['toggle']);
+
 const route = useRoute();
-const collapsed = ref(false);
 const currentRoute = computed(() => route.meta.title || 'Current Page');
 
 const toggleSidebar = () => {
-  collapsed.value = !collapsed.value;
-  // 这里你需要实现一个方法来实际折叠/展开侧边栏
+  emit('toggle');
 };
 </script>
 

@@ -1,8 +1,15 @@
 <template>
-  <a-layout-sider width="250" theme="light" class="sidebar">
+  <a-layout-sider
+    :width="250"
+    :collapsed="collapsed"
+    :trigger="null"
+    collapsible
+    theme="light"
+    class="sidebar"
+  >
     <div class="logo">
       <img src="@/assets/riluo.jpg" alt="Logo" />
-      <span>My App</span>
+      <span v-if="!collapsed">My App</span>
     </div>
     <a-menu
       v-model:selectedKeys="selectedKeys"
@@ -17,6 +24,13 @@ import { ref, computed, watch, h } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { RouterLink } from "vue-router";
 import routes from "@/router/routes";
+
+const props = defineProps({
+  collapsed: {
+    type: Boolean,
+    default: false
+  }
+});
 
 const router = useRouter();
 const route = useRoute();
@@ -64,6 +78,7 @@ watch(
   display: flex;
   align-items: center;
   background: #001529;
+  overflow: hidden;
 }
 
 .logo img {
@@ -75,6 +90,8 @@ watch(
   color: #fff;
   font-size: 18px;
   font-weight: 600;
+  margin-left: 8px;
+  white-space: nowrap;
 }
 
 :deep(.ant-menu-item) {
