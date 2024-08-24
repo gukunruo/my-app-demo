@@ -1,10 +1,12 @@
 <template>
-  <a-layout-sider width="200" theme="dark" class="sidebar">
-    <div class="logo">My Logo</div>
+  <a-layout-sider width="250" theme="light" class="sidebar">
+    <div class="logo">
+      <img src="@/assets/riluo.jpg" alt="Logo" />
+      <span>My App</span>
+    </div>
     <a-menu
       v-model:selectedKeys="selectedKeys"
       mode="inline"
-      theme="dark"
       :items="menuItems"
     />
   </a-layout-sider>
@@ -52,9 +54,34 @@ watch(
 </script>
 
 <style scoped>
-.sidebar .logo {
+.sidebar {
+  box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);
+}
+
+.logo {
+  height: 64px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  background: #001529;
+}
+
+.logo img {
   height: 32px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.2);
+  margin-right: 8px;
+}
+
+.logo span {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+:deep(.ant-menu-item) {
+  margin: 4px 0;
+}
+
+:deep(.ant-menu-item-selected) {
+  background-color: #e6f7ff;
 }
 </style>
