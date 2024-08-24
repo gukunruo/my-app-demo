@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import SideMenu from './components/sideMenu.vue';
-import TopBar from './components/topBar.vue';
+import SideMenu from "./components/sideMenu.vue";
+import TopBar from "./components/topBar.vue";
 </script>
 
 <style scoped>
@@ -28,12 +28,13 @@ import TopBar from './components/topBar.vue';
   padding: 12px;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .footer {
   text-align: center;
   padding: 12px;
-  background: #f0f2f5;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 </style>
