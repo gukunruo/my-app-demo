@@ -2,14 +2,12 @@
   <a-layout id="layout" class="container">
     <a-layout-sider width="200" theme="dark" class="sidebar">
       <div class="logo">My Logo</div>
-      <a-menu mode="inline" theme="dark">
-        <a-menu-item v-for="route in menuRoutes" :key="route.path">
-          <router-link :to="route.path">
-            <component :is="route.meta?.icon" />
-            {{ route.meta.title }}
-          </router-link>
-        </a-menu-item>
-      </a-menu>
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        mode="inline"
+        theme="dark"
+        :items="menuItems"
+      />
     </a-layout-sider>
 
     <a-layout>
@@ -26,8 +24,13 @@
 </template>
 
 <script setup>
-import { reactive, computed } from "vue";
-import routes from "@/router/routes"; // 假设你将路由配置放在这个路径下
+import { ref, computed, watch, h } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { RouterLink } from "vue-router";
+import routes from "@/router/routes";
+
+const router = useRouter();
+const route = useRoute();
 
 const getMenuRoutes = (routes) => {
   return routes.reduce((acc, route) => {
@@ -42,6 +45,23 @@ const getMenuRoutes = (routes) => {
 };
 
 const menuRoutes = computed(() => getMenuRoutes(routes));
+
+const menuItems = computed(() =>
+  menuRoutes.value.map((route) => ({
+    key: route.path,
+    icon: route.meta?.icon ? h(route.meta.icon) : null,
+    label: h(RouterLink, { to: route.path }, () => route.meta.title),
+  }))
+);
+
+const selectedKeys = ref([route.path]);
+
+watch(
+  () => route.path,
+  (newPath) => {
+    selectedKeys.value = [newPath];
+  }
+);
 </script>
 
 <style scoped>
