@@ -1,4 +1,4 @@
-import Layout from '@/layout/side-menu/index.vue';
+import Layout from '@/layout/index.vue';
 import { HomeOutlined } from '@ant-design/icons-vue';
 
 const routes = [
