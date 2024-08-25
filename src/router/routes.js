@@ -22,8 +22,29 @@ const routes = [
 			{
 				path: '/gantt',
 				name: 'Gantt',
-				component: () => import('@/views/gantt/index.vue'),
 				meta: { title: '甘特图', isMenu: true, icon: HomeOutlined },
+				children: [
+					{
+						path: '/gantt-demo1',
+						name: 'Gantt1',
+						component: () => import('@/views/gantt/index.vue'),
+						meta: {
+							title: '甘特图1',
+							isMenu: true,
+							icon: HomeOutlined,
+						},
+					},
+					{
+						path: '/gantt-demo2',
+						name: 'Gantt2',
+						component: () => import('@/views/gantt/index.vue'),
+						meta: {
+							title: '甘特图2',
+							isMenu: true,
+							icon: HomeOutlined,
+						},
+					},
+				]
 			}
 		]
 	},

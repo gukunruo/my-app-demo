@@ -1,11 +1,16 @@
 <template>
   <a-layout id="layout" class="container">
+    <!-- 左侧菜单栏 -->
     <SideMenu :collapsed="collapsed" />
+    <!-- 右侧 -->
     <a-layout>
+      <!-- 顶部状态栏 -->
       <TopBar :collapsed="collapsed" @toggle="toggleSidebar" />
+      <!-- 内容区 -->
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
+      <!-- 底部状态栏 -->
       <a-layout-footer class="footer">
         © 2024 riluo. All rights reserved.
       </a-layout-footer>

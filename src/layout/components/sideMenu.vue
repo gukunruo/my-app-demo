@@ -13,6 +13,7 @@
     </div>
     <a-menu
       v-model:selectedKeys="selectedKeys"
+      v-model:openKeys="openKeys"
       mode="inline"
       :items="menuItems"
     />
@@ -36,34 +37,45 @@ const router = useRouter();
 const route = useRoute();
 
 const getMenuRoutes = (routes) => {
-  return routes.reduce((acc, route) => {
+  return routes.flatMap(route => {
     if (route.children) {
-      acc.push(...getMenuRoutes(route.children));
+      return route.children.filter(child => child.meta && child.meta.isMenu);
     }
-    if (route.meta && route.meta.isMenu) {
-      acc.push(route);
-    }
-    return acc;
-  }, []);
+    return route.meta && route.meta.isMenu ? [route] : [];
+  });
 };
 
 const menuRoutes = computed(() => getMenuRoutes(routes));
 
-const menuItems = computed(() =>
-  menuRoutes.value.map((route) => ({
+const createMenuItem = (route) => {
+  const menuItem = {
     key: route.path,
     icon: route.meta?.icon ? h(route.meta.icon) : null,
     label: h(RouterLink, { to: route.path }, () => route.meta.title),
-  }))
-);
+  };
+
+  if (route.children && route.children.length > 0) {
+    menuItem.children = route.children.map(createMenuItem);
+  }
+
+  return menuItem;
+};
+
+const menuItems = computed(() => menuRoutes.value.map(createMenuItem));
 
 const selectedKeys = ref([route.path]);
+const openKeys = ref([]);
 
 watch(
   () => route.path,
   (newPath) => {
     selectedKeys.value = [newPath];
-  }
+    const parentPath = newPath.substring(0, newPath.lastIndexOf('/'));
+    if (parentPath) {
+      openKeys.value = [parentPath];
+    }
+  },
+  { immediate: true }
 );
 </script>
 
