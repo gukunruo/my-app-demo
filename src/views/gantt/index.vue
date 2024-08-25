@@ -17,7 +17,7 @@
         :min="0"
         :max="4"
         :step="1"
-        style="width: 300px; margin-left: 20px"
+        style="width: 300px; margin: 0 60px"
         @change="handleSliderChange"
       />
     </div>
@@ -363,6 +363,7 @@ onMounted(() => {
   stroke: #e8e8e8;
 }
 
+// 拖动条
 .gantt .bar {
   fill: #1890ff;
 }
