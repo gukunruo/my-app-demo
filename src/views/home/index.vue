@@ -15,8 +15,8 @@
     </a-row>
 
     <a-row :gutter="[16, 16]" class="mt-4">
-      <a-col :span="16">
-        <a-card title="我的任务" :bodyStyle="{ height: '300px', overflow: 'auto' }">
+      <a-col :span="14">
+        <a-card title="我的任务" :bodyStyle="{ height: '500px', overflow: 'auto' }">
           <a-list item-layout="horizontal" :data-source="tasks">
             <template #renderItem="{ item }">
               <a-list-item>
@@ -35,20 +35,45 @@
           </a-list>
         </a-card>
       </a-col>
-      <a-col :span="8">
-        <a-card title="快速笔记" :bodyStyle="{ height: '300px', overflow: 'auto' }">
-          <a-textarea v-model:value="quickNote" :rows="6" placeholder="在这里写下你的想法..." />
-          <a-button type="primary" class="mt-2" @click="saveNote">保存笔记</a-button>
+      <a-col :span="10">
+        <a-card title="快速笔记" :bodyStyle="{ height: '500px', display: 'flex', flexDirection: 'column' }">
+          <div :style="{flex: '1', display: 'flex', flexDirection: 'column'}">
+            <a-textarea
+              v-model:value="quickNote"
+              :rows="6"
+              placeholder="在这里写下你的想法..."
+              :style="{marginBottom: '16px', flex: '1'}"
+            />
+            <div :style="{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}">
+              <a-button type="primary" @click="saveNote">保存笔记</a-button>
+              <a-select
+                v-model:value="selectedCategory"
+                style="width: 120px"
+                placeholder="选择分类"
+              >
+                <a-select-option value="work">工作</a-select-option>
+                <a-select-option value="personal">个人</a-select-option>
+                <a-select-option value="ideas">创意</a-select-option>
+              </a-select>
+            </div>
+          </div>
           <a-divider>已保存的笔记</a-divider>
-          <a-list :data-source="savedNotes">
-            <template #renderItem="{ item }">
-              <a-list-item>
-                <a-list-item-meta :description="item.date">
-                  <template #title>{{ item.content.substring(0, 20) + '...' }}</template>
-                </a-list-item-meta>
-              </a-list-item>
-            </template>
-          </a-list>
+          <div style="flex: 1; overflow-y: auto">
+            <a-list :data-source="savedNotes">
+              <template #renderItem="{ item }">
+                <a-list-item>
+                  <a-list-item-meta :description="item.date">
+                    <template #title>
+                      <div style="display: flex; alignItems: center; justifyContent: space-between">
+                        <span>{{ item.content.substring(0, 20) + '...' }}</span>
+                        <a-tag color="blue">{{ item.category }}</a-tag>
+                      </div>
+                    </template>
+                  </a-list-item-meta>
+                </a-list-item>
+              </template>
+            </a-list>
+          </div>
         </a-card>
       </a-col>
     </a-row>
@@ -117,11 +142,13 @@ const addDays = (date, days) => {
 // 快速笔记
 const quickNote = ref('');
 const savedNotes = ref([]);
+const selectedCategory = ref('work');
 const saveNote = () => {
   if (quickNote.value.trim()) {
     savedNotes.value.unshift({
       content: quickNote.value,
-      date: formatDate(new Date())
+      date: formatDate(new Date()),
+      category: selectedCategory.value
     });
     quickNote.value = '';
     message.success('笔记已保存');
