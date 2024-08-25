@@ -203,32 +203,64 @@ onMounted(() => {
         </div>
       `;
     },
+    on_date_change: function (task, start, end) {
+      // 更新任务日期的逻辑
+      console.log(`Task ${task.name} changed. New dates: ${start} to ${end}`);
+    },
+    on_progress_change: function (task, progress) {
+      // 更新任务进度的逻辑
+      console.log(`Task ${task.name} progress changed to ${progress}%`);
+    },
+    on_view_change: function (mode) {
+      // 视图模式改变时的逻辑
+      console.log(`View mode changed to ${mode}`);
+    },
   });
 
   // 添加拖动切换模式功能
-  let startX;
-  let startScrollLeft;
+  let isDragging = false;
+  let isScrolling = false;
+  let startX, startY, startScrollLeft, startScrollTop;
   const ganttChartWrapper = ganttChart.value.closest(".gantt-chart-wrapper");
 
   ganttChartWrapper.addEventListener("mousedown", (e) => {
     startX = e.pageX - ganttChartWrapper.offsetLeft;
+    startY = e.pageY - ganttChartWrapper.offsetTop;
     startScrollLeft = ganttChartWrapper.scrollLeft;
+    startScrollTop = ganttChartWrapper.scrollTop;
+
+    // 检查是否点击在任务上
+    if (e.target.closest(".bar-wrapper")) {
+      isDragging = true;
+    } else {
+      isScrolling = true;
+    }
+
     ganttChartWrapper.style.cursor = "grabbing";
   });
 
-  ganttChartWrapper.addEventListener("mouseleave", () => {
-    ganttChartWrapper.style.cursor = "default";
+  ganttChartWrapper.addEventListener("mousemove", (e) => {
+    if (!isScrolling) return;
+
+    const x = e.pageX - ganttChartWrapper.offsetLeft;
+    const y = e.pageY - ganttChartWrapper.offsetTop;
+    const walkX = (x - startX) * 2;
+    const walkY = (y - startY) * 2;
+
+    ganttChartWrapper.scrollLeft = startScrollLeft - walkX;
+    ganttChartWrapper.scrollTop = startScrollTop - walkY;
   });
 
   ganttChartWrapper.addEventListener("mouseup", () => {
+    isDragging = false;
+    isScrolling = false;
     ganttChartWrapper.style.cursor = "default";
   });
 
-  ganttChartWrapper.addEventListener("mousemove", (e) => {
-    if (e.buttons !== 1) return;
-    const x = e.pageX - ganttChartWrapper.offsetLeft;
-    const walk = (x - startX) * 2;
-    ganttChartWrapper.scrollLeft = startScrollLeft - walk;
+  ganttChartWrapper.addEventListener("mouseleave", () => {
+    isDragging = false;
+    isScrolling = false;
+    ganttChartWrapper.style.cursor = "default";
   });
 });
 </script>
