@@ -14,7 +14,7 @@
       <a-dropdown>
         <a class="ant-dropdown-link" @click.prevent>
           <a-avatar src="src/assets/riluo.jpg" />
-          <span class="username">riluo</span>
+          <span class="username">日落</span>
         </a>
         <template #overlay>
           <a-menu>

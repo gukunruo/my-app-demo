@@ -1,59 +1,81 @@
 <template>
-  <div class="home-container">
+  <div class="personal-space">
     <a-row :gutter="[16, 16]">
       <a-col :span="24">
-        <a-card>
-          <h1 class="welcome-text">欢迎回来，{{ username }}！</h1>
-          <p class="sub-text">这里是您的个人仪表板概览</p>
-        </a-card>
-      </a-col>
-    </a-row>
-
-    <a-row :gutter="[16, 16]" class="mt-4">
-      <a-col :xs="24" :sm="12" :md="6" v-for="stat in stats" :key="stat.title">
-        <a-card>
-          <statistic
-            :title="stat.title"
-            :value="stat.value"
-            :precision="stat.precision"
-            :valueStyle="stat.valueStyle"
-          >
-            <template #prefix>
-              <component :is="stat.icon" />
-            </template>
-            <template #suffix>
-              <span v-if="stat.suffix">{{ stat.suffix }}</span>
-            </template>
-          </statistic>
+        <a-card class="welcome-card">
+          <div class="user-info">
+            <a-avatar :size="64" :src="userAvatar" />
+            <div class="user-details">
+              <h1>{{ username }}的个人空间</h1>
+              <p>{{ userRole }} | 上次登录: {{ lastLogin }}</p>
+            </div>
+          </div>
         </a-card>
       </a-col>
     </a-row>
 
     <a-row :gutter="[16, 16]" class="mt-4">
       <a-col :span="16">
-        <a-card title="最近活动">
-          <a-timeline>
-            <a-timeline-item
-              v-for="activity in recentActivities"
-              :key="activity.id"
-            >
-              {{ activity.text }}
-            </a-timeline-item>
-          </a-timeline>
+        <a-card title="我的任务" :bodyStyle="{ height: '300px', overflow: 'auto' }">
+          <a-list item-layout="horizontal" :data-source="tasks">
+            <template #renderItem="{ item }">
+              <a-list-item>
+                <a-list-item-meta :description="item.dueDate">
+                  <template #title>
+                    <a-checkbox v-model:checked="item.completed">{{ item.title }}</a-checkbox>
+                  </template>
+                </a-list-item-meta>
+                <template #extra>
+                  <a-tag :color="item.priority === 'high' ? 'red' : item.priority === 'medium' ? 'orange' : 'green'">
+                    {{ item.priority }}
+                  </a-tag>
+                </template>
+              </a-list-item>
+            </template>
+          </a-list>
         </a-card>
       </a-col>
       <a-col :span="8">
-        <a-card title="快速操作">
-          <a-button-group>
-            <a-button
-              type="primary"
-              v-for="action in quickActions"
-              :key="action.text"
-              @click="action.onClick"
-            >
-              {{ action.text }}
-            </a-button>
-          </a-button-group>
+        <a-card title="快速笔记" :bodyStyle="{ height: '300px', overflow: 'auto' }">
+          <a-textarea v-model:value="quickNote" :rows="6" placeholder="在这里写下你的想法..." />
+          <a-button type="primary" class="mt-2" @click="saveNote">保存笔记</a-button>
+          <a-divider>已保存的笔记</a-divider>
+          <a-list :data-source="savedNotes">
+            <template #renderItem="{ item }">
+              <a-list-item>
+                <a-list-item-meta :description="item.date">
+                  <template #title>{{ item.content.substring(0, 20) + '...' }}</template>
+                </a-list-item-meta>
+              </a-list-item>
+            </template>
+          </a-list>
+        </a-card>
+      </a-col>
+    </a-row>
+
+    <a-row :gutter="[16, 16]" class="mt-4">
+      <a-col :span="12">
+        <a-card title="近期日程">
+          <a-calendar :fullscreen="false" @select="onSelect" />
+        </a-card>
+      </a-col>
+      <a-col :span="12">
+        <a-card title="我的项目" :bodyStyle="{ height: '300px', overflow: 'auto' }">
+          <a-list :data-source="projects">
+            <template #renderItem="{ item }">
+              <a-list-item>
+                <a-list-item-meta>
+                  <template #title>
+                    <a :href="item.link">{{ item.name }}</a>
+                  </template>
+                  <template #description>
+                    <div>{{ item.description }}</div>
+                    <a-progress :percent="item.progress" size="small" :status="getProgressStatus(item.progress)" />
+                  </template>
+                </a-list-item-meta>
+              </a-list-item>
+            </template>
+          </a-list>
         </a-card>
       </a-col>
     </a-row>
@@ -61,72 +83,107 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import {
-  UserOutlined,
-  TeamOutlined,
-  ProjectOutlined,
-  ClockCircleOutlined,
-} from "@ant-design/icons-vue";
+import { ref, onMounted } from 'vue';
+import { message } from 'ant-design-vue';
 
-const username = ref("日落");
+// 欢迎卡片
+const username = ref('日落');
+const userRole = ref('前端开发工程师');
+const userAvatar = ref('https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png');
+const lastLogin = ref('');
 
-const stats = [
-  {
-    title: "项目总数",
-    value: 78,
-    icon: ProjectOutlined,
-    valueStyle: { color: "#3f8600" },
-  },
-  {
-    title: "团队成员",
-    value: 12,
-    icon: TeamOutlined,
-    valueStyle: { color: "#cf1322" },
-  },
-  {
-    title: "完成任务",
-    value: 156,
-    icon: ClockCircleOutlined,
-    valueStyle: { color: "#234ebd" },
-  },
-  {
-    title: "活跃用户",
-    value: 323,
-    icon: UserOutlined,
-    suffix: "人",
-    valueStyle: { color: "#faad14" },
-  },
-];
+const formatDate = (date) => {
+  const pad = (n) => n < 10 ? '0' + n : n;
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
 
-const recentActivities = [
-  { id: 1, text: '张三完成了任务 "优化首页设计"' },
-  { id: 2, text: '李四加入了项目 "客户管理系统"' },
-  { id: 3, text: '王五更新了文档 "产品规划2023"' },
-  { id: 4, text: "系统自动备份完成" },
-];
+// 任务
+const tasks = ref([]);
+const generateTasks = () => {
+  const today = new Date();
+  return [
+    { id: 1, title: '完成项目方案', completed: false, dueDate: formatDate(today), priority: 'high' },
+    { id: 2, title: '代码审查', completed: true, dueDate: formatDate(addDays(today, 1)), priority: 'medium' },
+    { id: 3, title: '团队会议', completed: false, dueDate: formatDate(addDays(today, 2)), priority: 'low' },
+    { id: 4, title: '优化性能', completed: false, dueDate: formatDate(addDays(today, 3)), priority: 'high' },
+  ];
+};
+const addDays = (date, days) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
 
-const quickActions = [
-  { text: "新建项目", onClick: () => console.log("新建项目") },
-  { text: "添加任务", onClick: () => console.log("添加任务") },
-  { text: "生成报告", onClick: () => console.log("生成报告") },
-];
+// 快速笔记
+const quickNote = ref('');
+const savedNotes = ref([]);
+const saveNote = () => {
+  if (quickNote.value.trim()) {
+    savedNotes.value.unshift({
+      content: quickNote.value,
+      date: formatDate(new Date())
+    });
+    quickNote.value = '';
+    message.success('笔记已保存');
+  } else {
+    message.warning('笔记内容不能为空');
+  }
+};
+
+// 项目
+const projects = ref([
+  { id: 1, name: '客户管理系统', description: '开发进行中', progress: 60, link: '#' },
+  { id: 2, name: '数据分析平台', description: '即将开始', progress: 0, link: '#' },
+  { id: 3, name: '移动应用重构', description: '已完成80%', progress: 80, link: '#' },
+]);
+const getProgressStatus = (progress) => {
+  if (progress === 100) return 'success';
+  if (progress >= 80) return 'active';
+  return 'normal';
+};
+
+// 日期选择
+const onSelect = (date) => {
+  message.info(`您选择了 ${date.format('YYYY-MM-DD')}`);
+};
+
+onMounted(() => {
+  // 在组件挂载时设置登录时间
+  lastLogin.value = formatDate(new Date());
+  tasks.value = generateTasks();
+});
 </script>
 
 <style scoped>
-.home-container {
+.personal-space {
   padding: 24px;
 }
 
-.welcome-text {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 8px;
+.welcome-card {
+  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+  color: white;
 }
 
-.sub-text {
-  font-size: 16px;
-  color: #8c8c8c;
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-details {
+  margin-left: 16px;
+}
+
+.user-details h1 {
+  color: white;
+  margin-bottom: 4px;
+}
+
+.user-details p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.mt-2 {
+  margin-top: 8px;
 }
 
 .mt-4 {
