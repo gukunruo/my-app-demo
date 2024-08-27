@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>项目排期甘特图</h1>
+    <!-- gantt模式选择区域 -->
     <div class="controls">
       <a-select
         v-model:value="currentViewMode"
@@ -21,7 +22,9 @@
         @change="handleSliderChange"
       />
     </div>
+    <!-- gantt区域 -->
     <div class="gantt-container">
+      <!-- 前部分列表 -->
       <a-table
         :columns="columns"
         :data-source="tasks"
@@ -29,6 +32,7 @@
         class="gantt-table"
       >
         <template #bodyCell="{ column, record, index }">
+          <!-- 角色 -->
           <template v-if="column.dataIndex === 'role'">
             {{
               index === 0 || tasks[index - 1].role !== record.role
@@ -36,6 +40,7 @@
                 : ""
             }}
           </template>
+          <!-- 子需求 -->
           <template v-else-if="column.dataIndex.startsWith('subRequirement')">
             {{
               record.subRequirements[
@@ -43,6 +48,7 @@
               ] || ""
             }}
           </template>
+          <!-- 负责人 -->
           <template v-else-if="column.dataIndex === 'responsible'">
             {{
               index === 0 || tasks[index - 1].role !== record.role
@@ -52,6 +58,7 @@
           </template>
         </template>
       </a-table>
+      <!-- gantt容器 -->
       <div class="gantt-chart-wrapper">
         <div ref="ganttChart" class="gantt-chart"></div>
       </div>
@@ -72,11 +79,11 @@ const currentViewMode = ref("Week");
 
 const sliderValue = ref(3);
 const sliderMarks = {
-  0: "Quarter Day",
-  1: "Half Day",
-  2: "Day",
-  3: "Week",
-  4: "Month",
+  0: "1/4天",
+  1: "1/2天",
+  2: "天",
+  3: "周",
+  4: "月",
 };
 
 const tasks = [
@@ -189,6 +196,7 @@ onMounted(() => {
     date_format: "YYYY-MM-DD",
     start: start,
     end: end,
+    language: "zh", // or 'es', 'it', 'ru', 'ptBr', 'fr', 'tr', 'zh', 'de', 'hu'
     custom_popup_html: function (task) {
       const startDate = dayjs(task.start).format("YYYY-MM-DD");
       const endDate = dayjs(task.end).format("YYYY-MM-DD");
