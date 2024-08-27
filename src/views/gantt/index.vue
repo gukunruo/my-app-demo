@@ -86,6 +86,7 @@ const sliderMarks = {
   4: "月",
 };
 
+// 任务数据
 const tasks = [
   {
     id: "1",
@@ -143,6 +144,7 @@ const maxSubRequirements = computed(() => {
   return Math.max(...tasks.map((task) => task.subRequirements.length));
 });
 
+// 动态生成列配置
 const columns = computed(() => [
   {
     title: "角色",
@@ -183,6 +185,7 @@ onMounted(() => {
   const start = dayjs().subtract(3, "day").format("YYYY-MM-DD");
   const end = dayjs().add(1, "year").format("YYYY-MM-DD");
 
+  // 初始化甘特图
   ganttInstance.value = new Gantt(ganttChart.value, tasks, {
     header_height: 50,
     column_width: 30,
