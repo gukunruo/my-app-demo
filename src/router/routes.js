@@ -27,7 +27,7 @@ const routes = [
 					{
 						path: '/gantt-demo1',
 						name: 'Gantt1',
-						component: () => import('@/views/gantt/index.vue'),
+						component: () => import('@/views/gantt/gantt1/index.vue'),
 						meta: {
 							title: '甘特图1',
 							isMenu: true,
@@ -37,7 +37,7 @@ const routes = [
 					{
 						path: '/gantt-demo2',
 						name: 'Gantt2',
-						component: () => import('@/views/gantt/index.vue'),
+						component: () => import('@/views/gantt/gantt2/index.vue'),
 						meta: {
 							title: '甘特图2',
 							isMenu: true,
