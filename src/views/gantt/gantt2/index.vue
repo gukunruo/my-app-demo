@@ -7,7 +7,7 @@
     <x-button @click="customStyle">切换颜色</x-button>
   </div>
 
-  <XGantt
+  <x-gantt
     :data="dataList"
     :dark="isDark"
     :highlight-date="isHighlightDate"
@@ -21,7 +21,7 @@
     <x-gantt-column prop="startDate" date-format="MM/DD" />
 
     <x-gantt-slider prop="o.t1" move />
-  </XGantt>
+  </x-gantt>
 </template>
 
 <script setup>
