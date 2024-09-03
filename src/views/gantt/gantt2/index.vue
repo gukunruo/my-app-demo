@@ -38,7 +38,7 @@ const dataList = ref([
             subRequirement: '需求文档',
             responsible: '张三',
             participant: '张三',
-            o: { t1: 'task-product-1' },
+            o: { t1: 'task-product-1', t2: 'task-product-3' },
           },
           {
             id: 'product-2',
@@ -192,7 +192,9 @@ const getParticipant = (row) => {
           {{ getParticipant(row) }}
         </template>
       </XGanttColumn>
-      <XGanttSlider move prop="o.t1" />
+      <XGanttSlider move prop="o.t1" >
+        <!-- <div><button>3333</button></div> -->
+      </XGanttSlider>
     </XGantt>
   </div>
 </template>

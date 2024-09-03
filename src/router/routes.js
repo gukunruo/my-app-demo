@@ -44,6 +44,16 @@ const routes = [
 							icon: HomeOutlined,
 						},
 					},
+					{
+						path: '/gantt-demo3',
+						name: 'Gantt3',
+						component: () => import('@/views/gantt/gantt3/index.vue'),
+						meta: {
+							title: '甘特图3',
+							isMenu: true,
+							icon: HomeOutlined,
+						},
+					},
 				]
 			}
 		]
