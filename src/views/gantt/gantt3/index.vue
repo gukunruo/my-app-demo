@@ -68,7 +68,7 @@ const currentPrecision = ref("week");
 const precisionLabels = {
   month: "月",
   week: "周",
-  day: "日",
+  day: "日"
 };
 
 const dateFormat = "YYYY-MM-DD";
