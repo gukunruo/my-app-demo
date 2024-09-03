@@ -38,6 +38,7 @@
           :precision="currentPrecision"
           bar-start="startDate"
           bar-end="endDate"
+          current-time
           :date-format="dateFormat"
           :grid-width="1440"
           :handle-width="10"
@@ -58,13 +59,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted } from "vue";
+import dayjs from 'dayjs';
 
-const chartStart = ref("2023-03-01");
-const chartEnd = ref("2023-05-31");
+const chartStart = ref("");
+const chartEnd = ref("");
 
 const precisions = ["month", "week", "day"];
-const currentPrecision = ref("week");
+const currentPrecision = ref("day");
 const precisionLabels = {
   month: "月",
   week: "周",
@@ -119,8 +121,8 @@ const tasks = ref([
     subRequirement2: "用户调研",
     responsible: "张三",
     name: "张三",
-    startDate: "2023-03-01",
-    endDate: "2023-03-15",
+    startDate: "2024-09-01",
+    endDate: "2024-09-05",
     ganttBarConfig: {
       id: "task-1",
       label: "张三",
@@ -135,8 +137,8 @@ const tasks = ref([
     subRequirement2: "用户调研",
     responsible: "张三",
     name: "李四",
-    startDate: "2023-03-05",
-    endDate: "2023-03-20",
+    startDate: "2024-09-05",
+    endDate: "2024-09-10",
     ganttBarConfig: {
       id: "task-2",
       label: "李四",
@@ -151,8 +153,8 @@ const tasks = ref([
     subRequirement2: "交互设计",
     responsible: "李四",
     name: "王五",
-    startDate: "2023-03-10",
-    endDate: "2023-03-25",
+    startDate: "2024-09-10",
+    endDate: "2024-09-15",
     ganttBarConfig: {
       id: "task-3",
       label: "王五",
@@ -167,8 +169,8 @@ const tasks = ref([
     subRequirement2: "功能实现",
     responsible: "王五",
     name: "赵六",
-    startDate: "2023-03-20",
-    endDate: "2023-04-15",
+    startDate: "2024-09-20",
+    endDate: "2024-10-15",
     ganttBarConfig: {
       id: "task-4",
       label: "赵六",
@@ -183,8 +185,8 @@ const tasks = ref([
     subRequirement2: "性能测试",
     responsible: "赵六",
     name: "钱七",
-    startDate: "2023-04-10",
-    endDate: "2023-04-25",
+    startDate: "2024-10-10",
+    endDate: "2024-10-25",
     ganttBarConfig: {
       id: "task-5",
       label: "钱七",
@@ -196,6 +198,28 @@ const tasks = ref([
 
 const changePrecision = (precision) => {
   currentPrecision.value = precision;
+
+  // 找到最早的开始日期
+  const earliestStart = tasks.value.reduce((earliest, task) => {
+    const taskStart = dayjs(task.startDate);
+    return taskStart.isBefore(earliest) ? taskStart : earliest;
+  }, dayjs());
+
+  // 设置 chartStart 为最早的开始日期
+  chartStart.value = earliestStart.format('YYYY-MM-DD');
+
+  // 根据精度设置 chartEnd
+  switch (precision) {
+    case 'day':
+      chartEnd.value = earliestStart.add(14, 'day').format('YYYY-MM-DD');
+      break;
+    case 'week':
+      chartEnd.value = earliestStart.add(14, 'week').format('YYYY-MM-DD');
+      break;
+    case 'month':
+      chartEnd.value = earliestStart.add(14, 'month').format('YYYY-MM-DD');
+      break;
+  }
 };
 
 const onBarEvent = (event) => {
@@ -221,6 +245,10 @@ const onBarEvent = (event) => {
     }
   }
 };
+
+onMounted(() => {
+  changePrecision(currentPrecision.value)
+})
 </script>
 
 <style scoped lang="scss">
