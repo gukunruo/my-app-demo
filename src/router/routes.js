@@ -55,6 +55,17 @@ const routes = [
 						},
 					},
 				]
+			},
+			// 导出Excel
+			{
+				path: '/export-excel',
+				name: 'ExportExcel',
+				component: () => import('@/views/export-excel/index.vue'),
+				meta: {
+					title: '导出Excel',
+					isMenu: true,
+					icon: HomeOutlined,
+				},
 			}
 		]
 	},

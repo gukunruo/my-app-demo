@@ -17,6 +17,12 @@ importers:
       '@xpyjs/gantt':
         specifier: ^2.1.13
         version: 2.1.13(async-validator@4.2.5)(vue@3.4.38)
+      ag-grid-community:
+        specifier: ^32.2.2
+        version: 32.2.2
+      ag-grid-vue3:
+        specifier: ^32.2.2
+        version: 32.2.2
       ant-design-vue:
         specifier: ^4.2.3
         version: 4.2.3(vue@3.4.38)
@@ -35,6 +41,9 @@ importers:
       vue-router:
         specifier: ^4.0.13
         version: 4.4.3(vue@3.4.38)
+      xlsx:
+        specifier: ^0.18.5
+        version: 0.18.5
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.5
@@ -442,6 +451,19 @@ packages:
   '@xpyjs/gantt@2.1.13':
     resolution: {integrity: sha512-zQm+MHQeQrjVuUtwm5/0JYbD+cyqGTfvaKKA5QC9zVdMzdDFBbHWtQjPPh8RwcnFuvEu+uuxVRLYvkIMpGP1qA==}
 
+  adler-32@1.3.1:
+    resolution: {integrity: sha512-ynZ4w/nUUv5rrsR8UUGoe1VC9hZj6V5hU9Qw1HlMDJGEJw5S7TfTErWTjMys6M7vr0YWcPqs3qAr4ss0nDfP+A==, tarball: https://registry.npmmirror.com/adler-32/-/adler-32-1.3.1.tgz}
+    engines: {node: '>=0.8'}
+
+  ag-charts-types@10.2.0:
+    resolution: {integrity: sha512-PUqH1QtugpYLnlbMdeSZVf5PpT1XZVsP69qN1JXhetLtQpVC28zaj7ikwu9CMA9N9b+dBboA9QcjUQUJZVUokQ==, tarball: https://registry.npmmirror.com/ag-charts-types/-/ag-charts-types-10.2.0.tgz}
+
+  ag-grid-community@32.2.2:
+    resolution: {integrity: sha512-RQluoEXbTCkYHHwmOUzG4wGBX3yQffFH+52aWJUAFqFKNNHYKYGhjvH2iuAa2xw3CWva1hupUaDpP+Rol32Arg==, tarball: https://registry.npmmirror.com/ag-grid-community/-/ag-grid-community-32.2.2.tgz}
+
+  ag-grid-vue3@32.2.2:
+    resolution: {integrity: sha512-i2SK0yd+8rhrNOjq3ylCfr2h9sqiku2O72pJsh9DFibwLlOABK8t5SyIteEclM6jaWzsFC5yZ7zxLe7wFHt/hw==, tarball: https://registry.npmmirror.com/ag-grid-vue3/-/ag-grid-vue3-32.2.2.tgz}
+
   ant-design-vue@4.2.3:
     resolution: {integrity: sha512-kqGyWvZtFlSInFP93Ow6wS8LzEsxxUgpI+ZY5jQQkuX8WAcqdwXCA7IcHMpECW6JB89DZMo2Bw85jUg2SjlgQA==, tarball: https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-4.2.3.tgz}
     engines: {node: '>=12.22.0'}
@@ -466,15 +488,28 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==, tarball: https://registry.npmmirror.com/braces/-/braces-3.0.3.tgz}
     engines: {node: '>=8'}
 
+  cfb@1.2.2:
+    resolution: {integrity: sha512-KfdUZsSOw19/ObEWasvBP/Ac4reZvAGauZhs6S/gqNhXhI7cKwvlH7ulj+dOEYnca4bm4SGo8C1bTAQvnTjgQA==, tarball: https://registry.npmmirror.com/cfb/-/cfb-1.2.2.tgz}
+    engines: {node: '>=0.8'}
+
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==, tarball: https://registry.npmmirror.com/chokidar/-/chokidar-3.6.0.tgz}
     engines: {node: '>= 8.10.0'}
+
+  codepage@1.15.0:
+    resolution: {integrity: sha512-3g6NUTPd/YtuuGrhMnOMRjFc+LJw/bnMp3+0r/Wcz3IXUuCosKRJvMphm5+Q+bvTVGcJJuRvVLuYba+WojaFaA==, tarball: https://registry.npmmirror.com/codepage/-/codepage-1.15.0.tgz}
+    engines: {node: '>=0.8'}
 
   compute-scroll-into-view@1.0.20:
     resolution: {integrity: sha512-UCB0ioiyj8CRjtrvaceBLqqhZCVP+1B8+NWQhmdsm0VXOJtobBCf1dBQmebCCo34qZmUwZfIH2MZLqNHazrfjg==, tarball: https://registry.npmmirror.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.20.tgz}
 
   core-js@3.38.1:
     resolution: {integrity: sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==, tarball: https://registry.npmmirror.com/core-js/-/core-js-3.38.1.tgz}
+
+  crc-32@1.2.2:
+    resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==, tarball: https://registry.npmmirror.com/crc-32/-/crc-32-1.2.2.tgz}
+    engines: {node: '>=0.8'}
+    hasBin: true
 
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==, tarball: https://registry.npmmirror.com/csstype/-/csstype-3.1.3.tgz}
@@ -503,6 +538,10 @@ packages:
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==, tarball: https://registry.npmmirror.com/fill-range/-/fill-range-7.1.1.tgz}
     engines: {node: '>=8'}
+
+  frac@1.1.2:
+    resolution: {integrity: sha512-w/XBfkibaTl3YDqASwfDUqkna4Z2p9cFSr1aHDt0WoMTECnRfBOv2WArlZILlqgWlmdIlALXGpM2AOhEk5W3IA==, tarball: https://registry.npmmirror.com/frac/-/frac-1.1.2.tgz}
+    engines: {node: '>=0.8'}
 
   frappe-gantt@0.6.1:
     resolution: {integrity: sha512-1cSU9vLbwypjzaxnCfnEE03Xr3HlAV2S8dRtjxw62o+amkx1A8bBIFd2jp84mcDdTCM77Ij4LzZBslAKZB8oMg==, tarball: https://registry.npmmirror.com/frappe-gantt/-/frappe-gantt-0.6.1.tgz}
@@ -611,6 +650,10 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==, tarball: https://registry.npmmirror.com/source-map-js/-/source-map-js-1.2.0.tgz}
     engines: {node: '>=0.10.0'}
 
+  ssf@0.11.2:
+    resolution: {integrity: sha512-+idbmIXoYET47hH+d7dfm2epdOMUDjqcB4648sTZ+t2JwoyBFL/insLfB/racrDmsKB3diwsDA696pZMieAC5g==, tarball: https://registry.npmmirror.com/ssf/-/ssf-0.11.2.tgz}
+    engines: {node: '>=0.8'}
+
   stylis@4.3.4:
     resolution: {integrity: sha512-osIBl6BGUmSfDkyH2mB7EFvCJntXDrLhKjHTRj/rK6xLH0yuPrHULDRQzKokSOD4VoorhtKpfcfW1GAntu8now==, tarball: https://registry.npmmirror.com/stylis/-/stylis-4.3.4.tgz}
 
@@ -695,6 +738,19 @@ packages:
 
   warning@4.0.3:
     resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==, tarball: https://registry.npmmirror.com/warning/-/warning-4.0.3.tgz}
+
+  wmf@1.0.2:
+    resolution: {integrity: sha512-/p9K7bEh0Dj6WbXg4JG0xvLQmIadrner1bi45VMJTfnbVHsc7yIajZyoSoK60/dtVBs12Fm6WkUI5/3WAVsNMw==, tarball: https://registry.npmmirror.com/wmf/-/wmf-1.0.2.tgz}
+    engines: {node: '>=0.8'}
+
+  word@0.3.0:
+    resolution: {integrity: sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==, tarball: https://registry.npmmirror.com/word/-/word-0.3.0.tgz}
+    engines: {node: '>=0.8'}
+
+  xlsx@0.18.5:
+    resolution: {integrity: sha512-dmg3LCjBPHZnQp5/F/+nnTa+miPJxUXB6vtk42YjBBKayDNagxGEeIdWApkYPOf3Z3pm3k62Knjzp7lMeTEtFQ==, tarball: https://registry.npmmirror.com/xlsx/-/xlsx-0.18.5.tgz}
+    engines: {node: '>=0.8'}
+    hasBin: true
 
 snapshots:
 
@@ -1017,6 +1073,21 @@ snapshots:
       - universal-cookie
       - vue
 
+  adler-32@1.3.1: {}
+
+  ag-charts-types@10.2.0: {}
+
+  ag-grid-community@32.2.2:
+    dependencies:
+      ag-charts-types: 10.2.0
+
+  ag-grid-vue3@32.2.2:
+    dependencies:
+      ag-grid-community: 32.2.2
+      vue: 3.4.38
+    transitivePeerDependencies:
+      - typescript
+
   ant-design-vue@4.2.3(vue@3.4.38):
     dependencies:
       '@ant-design/colors': 6.0.0
@@ -1058,6 +1129,11 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
+  cfb@1.2.2:
+    dependencies:
+      adler-32: 1.3.1
+      crc-32: 1.2.2
+
   chokidar@3.6.0:
     dependencies:
       anymatch: 3.1.3
@@ -1070,9 +1146,13 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  codepage@1.15.0: {}
+
   compute-scroll-into-view@1.0.20: {}
 
   core-js@3.38.1: {}
+
+  crc-32@1.2.2: {}
 
   csstype@3.1.3: {}
 
@@ -1115,6 +1195,8 @@ snapshots:
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
+
+  frac@1.1.2: {}
 
   frappe-gantt@0.6.1: {}
 
@@ -1217,6 +1299,10 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
+  ssf@0.11.2:
+    dependencies:
+      frac: 1.1.2
+
   stylis@4.3.4: {}
 
   throttle-debounce@5.0.2: {}
@@ -1268,3 +1354,17 @@ snapshots:
   warning@4.0.3:
     dependencies:
       loose-envify: 1.4.0
+
+  wmf@1.0.2: {}
+
+  word@0.3.0: {}
+
+  xlsx@0.18.5:
+    dependencies:
+      adler-32: 1.3.1
+      cfb: 1.2.2
+      codepage: 1.15.0
+      crc-32: 1.2.2
+      ssf: 0.11.2
+      wmf: 1.0.2
+      word: 0.3.0

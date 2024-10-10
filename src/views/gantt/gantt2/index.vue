@@ -1,7 +1,7 @@
 <!-- eslint-disable no-console -->
 <!-- eslint-disable n/no-extraneous-import -->
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import { XGantt, XGanttColumn, XGanttSlider } from '@xpyjs/gantt';
 import { message } from 'ant-design-vue';
@@ -15,7 +15,7 @@ const themeColor = ref('#cfd8f5');
 const currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0); // 设置时间为0点
 
-const dataList = ref([
+const dataList = reactive([
   // {
   //   endDate: currentDate.setDate(30),
   //   id: 'project',
@@ -36,8 +36,8 @@ const dataList = ref([
         endDate: currentDate.setDate(5),
         requirement: '用户管理系统',
         subRequirement: '需求文档',
-        responsible: '张三',
-        participant: '张三',
+        responsible: '张三1',
+        participant: '张三11',
         o: { t1: 'task-product-1', t2: 'task-product-3' },
       },
       {
@@ -47,8 +47,8 @@ const dataList = ref([
         endDate: currentDate.setDate(10),
         requirement: '用户管理系统',
         subRequirement: '产品原型',
-        responsible: '张三',
-        participant: '张三',
+        responsible: '张三2',
+        participant: '张三22',
         o: { t1: 'task-product-2' },
       },
     ],
@@ -65,8 +65,8 @@ const dataList = ref([
         endDate: currentDate.setDate(15),
         requirement: '用户管理系统',
         subRequirement: 'UI设计稿',
-        responsible: '李四',
-        participant: '李四',
+        responsible: '李四1',
+        participant: '李四11',
         o: { t1: 'task-ui-1' },
       },
     ],
@@ -83,8 +83,8 @@ const dataList = ref([
         endDate: currentDate.setDate(20),
         requirement: '用户管理系统',
         subRequirement: '登录功能',
-        responsible: '王五',
-        participant: '王五',
+        responsible: '王五1',
+        participant: '王五11',
         o: { t1: 'task-frontend-1' },
       },
       {
@@ -94,8 +94,8 @@ const dataList = ref([
         endDate: currentDate.setDate(25),
         requirement: '用户管理系统',
         subRequirement: '用户列表',
-        responsible: '赵六',
-        participant: '赵六',
+        responsible: '赵六1',
+        participant: '赵六11',
         o: { t1: 'task-frontend-2' },
       },
     ],
@@ -112,8 +112,8 @@ const dataList = ref([
         endDate: currentDate.setDate(25),
         requirement: '用户管理系统',
         subRequirement: '后端API',
-        responsible: '钱七',
-        participant: '钱七',
+        responsible: '钱七1',
+        participant: '钱七11',
         o: { t1: 'task-backend-1' },
       },
     ],
@@ -130,8 +130,8 @@ const dataList = ref([
         endDate: currentDate.setDate(30),
         requirement: '用户管理系统',
         subRequirement: '系统测试',
-        responsible: '孙八',
-        participant: '孙八',
+        responsible: '孙八1',
+        participant: '孙八11',
         o: { t1: 'task-testing-1' },
       },
     ],
@@ -143,7 +143,7 @@ const dataList = ref([
 // 计算数据的最大深度
 const maxDepth = computed(() => {
   let maxDepth = 0;
-  const stack = dataList.value.map((item) => ({ depth: 1, item }));
+  const stack = dataList.map((item) => ({ depth: 1, item }));
 
   while (stack.length > 0) {
     const { depth, item } = stack.pop();
