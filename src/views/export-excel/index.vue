@@ -61,12 +61,26 @@ const onGridReady = (params) => {
   console.log("Grid is ready!", params.api);
 };
 
+// 获取当前时间并格式化字符串
+const getCurrentFormattedTime = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+  return `${year}-${month}-${day}_${hours}:${minutes}:${seconds}:${milliseconds}`;
+};
+
 // 导出到 Excel 的函数
 const exportToExcel = () => {
   const worksheet = XLSX.utils.json_to_sheet(rowData.value);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-  XLSX.writeFile(workbook, "table_data.xlsx");
+  const filename = `table_data_${getCurrentFormattedTime()}.xlsx`;
+  XLSX.writeFile(workbook, filename);
 };
 </script>
 
