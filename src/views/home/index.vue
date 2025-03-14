@@ -187,8 +187,9 @@ onMounted(() => {
 }
 
 .welcome-card {
-  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
-  color: white;
+  background: linear-gradient(135deg, #13c2c2 0%, #52c41a 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .user-info {
@@ -215,5 +216,6 @@ onMounted(() => {
 
 .mt-4 {
   margin-top: 16px;
+  padding: 8px;
 }
 </style>

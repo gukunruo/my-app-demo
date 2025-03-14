@@ -66,6 +66,17 @@ const routes = [
 					isMenu: true,
 					icon: HomeOutlined,
 				},
+			},
+			// excel文件处理
+			{
+				path: '/deal-excel',
+				name: 'DealExcel',
+				component: () => import('@/views/deal-excel/index.vue'),
+				meta: {
+					title: 'Excel处理',
+					isMenu: true,
+					icon: HomeOutlined,
+				},
 			}
 		]
 	},

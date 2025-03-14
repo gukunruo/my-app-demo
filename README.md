@@ -1,16 +1,16 @@
 # Vue 3 + Vite
 
-# Background
+## Background
 
 my-app-demo 测试demo
 
 ## 依赖安装（首次或者后续更新）
 
-```
+```bash
 pnpm install
 ```
 
-#### 为什么使用 pnpm
+### 为什么使用 pnpm
 
 1. 安装更快，占用项目体积更小
 2. 解决幽灵依赖问题——没有在根目录的 package.json 中依赖的包，不允许直接引用（这么做很危险，排除问题带来极大挑战）
@@ -19,7 +19,7 @@ pnpm install
 
 ### 启动开发环境
 
-```
+```bash
 pnpm dev
 #or
 pnpm run dev
@@ -27,13 +27,13 @@ pnpm run dev
 
 ### 编译
 
-```
+```bash
 pnpm run build
 ```
 
 ### Lints and fixes files 还未配置
 
-```
+```bash
 pnpm run lint
 ```
 
@@ -42,8 +42,6 @@ pnpm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 备注
-
-
 
 ### 代码规范
 
