@@ -3,20 +3,27 @@
     <RecycleScroller
       class="scroller"
       :items="items"
-      :item-size="300"
+      :item-size="350"
       key-field="id"
       v-slot="{ item }"
     >
       <div class="card">
-        <img :src="item.imageUrl" :alt="item.title" class="card-image" />
-        <div class="card-content">
-          <h3 class="card-title">{{ item.title }}</h3>
-          <p class="card-description">{{ item.description }}</p>
+        <div class="card-image-wrapper">
+          <img
+            :src="item.imageUrl"
+            :alt="item.title"
+            class="card-image"
+            :key="item.id"
+          />
           <div class="card-tags">
             <span v-for="tag in item.tags" :key="tag" class="tag">
               {{ tag }}
             </span>
           </div>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">{{ item.title }}</h3>
+          <p class="card-description">{{ item.description }}</p>
           <div class="card-footer">
             <span class="create-time">{{ item.createTime }}</span>
           </div>
@@ -51,73 +58,120 @@ const items = ref(mockData)
 .virtual-scroll-container {
   height: calc(100vh - 100px);
   width: 100%;
-  padding: 20px;
 }
 
 .scroller {
   height: 100%;
   overflow-y: auto;
+  padding: 10px;
 }
 
 .card {
-  margin: 10px;
-  border-radius: 8px;
+  height: 350px;
+  margin: 15px;
+  border-radius: 12px;
   background: white;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.card:hover {
+.card.hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 
 .card-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card.hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-tags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #409eff;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
 }
 
 .card-content {
-  padding: 16px;
+  padding: 20px;
+  height: calc(100% - 200px);
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
-  margin: 0 0 8px;
+  margin: 0 0 12px;
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #303133;
 }
 
 .card-description {
   margin: 0 0 16px;
   font-size: 14px;
-  color: #666;
-  line-height: 1.5;
-}
-
-.card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.tag {
-  padding: 4px 8px;
-  background: #f0f0f0;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #666;
+  color: #606266;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
 }
 
 .card-footer {
   display: flex;
   justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid #ebeef5;
 }
 
 .create-time {
   font-size: 12px;
-  color: #999;
+  color: #909399;
+}
+
+/* 自定义滚动条样式 */
+.scroller::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroller::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.scroller::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 </style>

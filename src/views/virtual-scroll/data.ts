@@ -9,7 +9,7 @@ interface CardItem {
 
 // 生成随机标签
 const generateTags = (): string[] => {
-  const allTags = ['Vue', 'React', 'Angular', 'TypeScript', 'JavaScript', 'Node.js', 'Python', 'Java', 'Go', 'Ruby'];
+  const allTags = ['前端开发', '后端开发', '移动开发', '人工智能', '大数据', '云计算', '区块链', '物联网', '网络安全', 'DevOps'];
   const count = Math.floor(Math.random() * 3) + 1; // 1-3个标签
   const tags: string[] = [];
   for (let i = 0; i < count; i++) {
@@ -33,8 +33,8 @@ const generateDate = (): string => {
 export const generateMockData = (count: number = 100): CardItem[] => {
   return Array.from({ length: count }, (_, index) => ({
     id: index + 1,
-    title: `Card Title ${index + 1}`,
-    description: `This is a description for card ${index + 1}. It contains some sample text to demonstrate the card content.`,
+    title: `技术文章 ${index + 1}`,
+    description: `这是一篇关于${generateTags()[0]}的技术文章，主要介绍了相关技术的最新发展和应用实践。文章内容深入浅出，适合各个层次的开发者阅读。`,
     imageUrl: `https://picsum.photos/300/200?random=${index + 1}`,
     tags: generateTags(),
     createTime: generateDate()
