@@ -1,5 +1,11 @@
 import Layout from '@/layout/index.vue';
-import { HomeOutlined } from '@ant-design/icons-vue';
+import { 
+	HomeOutlined, 
+	BarChartOutlined, 
+	FileExcelOutlined, 
+	TableOutlined,
+	AppstoreOutlined 
+} from '@ant-design/icons-vue';
 
 const routes = [
 	{
@@ -22,7 +28,7 @@ const routes = [
 			{
 				path: '/gantt',
 				name: 'Gantt',
-				meta: { title: '甘特图', isMenu: true, icon: HomeOutlined },
+				meta: { title: '甘特图', isMenu: true, icon: BarChartOutlined },
 				children: [
 					{
 						path: '/gantt-demo1',
@@ -31,7 +37,7 @@ const routes = [
 						meta: {
 							title: '甘特图1',
 							isMenu: true,
-							icon: HomeOutlined,
+							icon: BarChartOutlined,
 						},
 					},
 					{
@@ -41,7 +47,7 @@ const routes = [
 						meta: {
 							title: '甘特图2',
 							isMenu: true,
-							icon: HomeOutlined,
+							icon: BarChartOutlined,
 						},
 					},
 					{
@@ -51,7 +57,7 @@ const routes = [
 						meta: {
 							title: '甘特图3',
 							isMenu: true,
-							icon: HomeOutlined,
+							icon: BarChartOutlined,
 						},
 					},
 				]
@@ -64,7 +70,7 @@ const routes = [
 				meta: {
 					title: '导出Excel',
 					isMenu: true,
-					icon: HomeOutlined,
+					icon: FileExcelOutlined,
 				},
 			},
 			// excel文件处理
@@ -75,7 +81,18 @@ const routes = [
 				meta: {
 					title: 'Excel处理',
 					isMenu: true,
-					icon: HomeOutlined,
+					icon: TableOutlined,
+				},
+			},
+			// 虚拟滚动
+			{
+				path: '/virtual-scroll',
+				name: 'VirtualScroll',
+				component: () => import('@/views/virtual-scroll/index.vue'),
+				meta: {
+					title: '虚拟滚动',
+					isMenu: true,
+					icon: AppstoreOutlined,
 				},
 			}
 		]
